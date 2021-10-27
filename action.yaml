@@ -1,4 +1,5 @@
 name: DesigniteJava_action
+description: Analyzes the newly commited code, detects comprehensive set of code smells, and uploads the results to QScored.
 on:
   push:
     branches: [ master ]
