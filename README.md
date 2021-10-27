@@ -1,1 +1,1 @@
-# GitHubActions
+# DesigniteJava action for GitHub
