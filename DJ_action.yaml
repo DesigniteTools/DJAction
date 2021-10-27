@@ -1,0 +1,20 @@
+name: DesigniteJava_action
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download DesigniteJava
+        run: wget "https://www.designite-tools.com/static/download/DJE/DesigniteJava.jar"
+      - name: Analyze project with DesigniteJava
+        run: |
+          java -jar DesigniteJava.jar -ci -repo $GITHUB_REPOSITORY -pat ${{ secrets.PAT }} -k ${{ secrets.D_KEY }}
+          ls
+          curl -X PUT -H "Authorization: Token ${{ secrets.QSCORED_API_KEY }}" -H "repository-link:https://github.com/" + GITHUB_REPOSITORY -H "username: 'Your
+        email'" -H "Content-Type: mulitpart/form-data" --url "https://qscored.com/api/upload/file.xml?is_open_access=off&version=$GITHUB_RUN_NUMBER&project_name='Project
+        name'" -F "file=@Designite_output/DesigniteAnalysis.xml"
