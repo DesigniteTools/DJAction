@@ -31,7 +31,11 @@ runs:
         shell: sh
       - name: Analyze project with DesigniteJava and upload the results to QScored
         run: |
-            "[[ inputs.D_KEY == 'No key' ]] && java -jar DesigniteJava.jar -ci -repo $GITHUB_REPOSITORY -pat ${{ inputs.PAT }}"
-            "[[ inputs.D_KEY != 'No key' ]] && java -jar DesigniteJava.jar -ci -repo $GITHUB_REPOSITORY -pat ${{ inputs.PAT }} -k inputs.D_KEY"
+            if [[ "${{inputs.D_KEY}}" == "No key" ]]; then
+            java -jar DesigniteJava.jar -ci -repo $GITHUB_REPOSITORY -pat ${{ inputs.PAT }}
+            fi
+            if [[ "${{inputs.D_KEY}}" != "No key" ]]; then
+            java -jar DesigniteJava.jar -ci -repo $GITHUB_REPOSITORY -pat ${{ inputs.PAT }} -k inputs.D_KEY
+            fi
             curl -X PUT -H "Authorization: Token ${{ inputs.QSCORED_API_KEY }}" -H "repository-link:https://github.com/" + ${{ github.repository }} -H "username:${{ inputs.EMAIL }}" -H "Content-Type: mulitpart/form-data" --url "https://qscored.com/api/upload/file.xml?is_open_access=${{ inputs.OPEN_SOURCE }}&version=$GITHUB_RUN_NUMBER&project_name=${{ inputs.PRJ_NAME }}" -F "file=@Designite_output/DesigniteAnalysis.xml"
         shell: sh
