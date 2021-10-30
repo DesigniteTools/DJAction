@@ -23,7 +23,7 @@ If you have Designite’s professional (or academic) license key, add the key to
 
 ### Step 4: Add a GitHub Actions workflow file
 
-This is the last and very crucial step. Create a folder '''.github''' on your root directory of the project and create “workflows” folder inside the '''.github''' folder. Create a workflow file (say '''actions.yml''') in the newly created '''workflows''' folder. The contents of the '''action.yml''' file depends upon your project language and tasks.
+This is the last and very crucial step. Create a folder `.github` on your root directory of the project and create `workflows` folder inside the `.github` folder. Create a workflow file (say `actions.yml`) in the newly created `workflows` folder. The contents of the `action.yml` file depends upon your project language and tasks.
 
 A sample action file is provided below.
 
