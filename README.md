@@ -11,6 +11,7 @@ It is a one-time process.
 - Add this token to your repository’s secrets. Go to “Settings” within your repository page and select “Secrets”. Add a new secret by pasting the access token in the Value field and give a meaning name (e.g. PAT).
 
 ### Step 2: Add QScored API key to secrets
+[QScored](https://www.qscored.com) allows you to visualize code quality information.
 - If you do not have a QScored API key for your account, follow these steps to get one.
     - Login to your QScored account. If you don’t have an account yet, create one.
     - Go to the “Settings” page after logging in; it is located on the right top side of the navigation bar. Click on “Request an API key” option; you will get your API key within seconds in your inbox.
@@ -22,11 +23,11 @@ If you have Designite’s professional (or academic) license key, add the key to
 
 ### Step 4: Add a GitHub Actions workflow file
 
-This is the last and very crucial step. Create a folder “.github” on your root directory of the project and create “workflows” folder inside the “.github” folder. Create a workflow file (say “actions.yml”) in the newly created “workflows” folder. The contents of the action.yml file depends upon your project language and tasks.
+This is the last and very crucial step. Create a folder '''.github''' on your root directory of the project and create “workflows” folder inside the '''.github''' folder. Create a workflow file (say '''actions.yml''') in the newly created '''workflows''' folder. The contents of the '''action.yml''' file depends upon your project language and tasks.
 
 A sample action file is provided below.
 
-```
+```yaml
 name: CI
 
 on:
