@@ -1,7 +1,7 @@
 # DesigniteJava action for GitHub
 
 ## What it does?
-This action enables **continuous code quality monitoring** for your Java project. It analyzes your Java code using [DesigniteJava](), detects a comprehensive set of architecture, design, and implementation smells, computes a large set of object-oriented code quality metrics, and uploads the results to QScored automatically to keep track of your project's code quality over time.
+This action enables **continuous code quality monitoring** for your Java project. It analyzes your Java code using [DesigniteJava](https://www.designite-tools.com/designitejava/), detects a comprehensive set of architecture, design, and implementation smells, computes a large set of object-oriented code quality metrics, and uploads the results to QScored automatically to keep track of your project's code quality over time.
 
 ## How to configure it?
 It is a one-time process.
@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: DesigniteJava_action
-      uses: DesigniteTools/DJAction@v1.81
+      uses: DesigniteTools/DJAction@v1.0.0
       with:
           PAT: ${{ secrets.PAT }}
           QSCORED_API_KEY: ${{ secrets.QSCORED_API_KEY }}
