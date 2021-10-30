@@ -14,9 +14,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         env:
-          QSCORED_API_KEY: ${{ secrets.QSCORED_API_KEY }}
-          PAT: ${{ secrets.PAT }}
-          D_KEY: ${{ secrets.D_KEY }}
+          QSCORED_API_KEY: ${{ QSCORED_API_KEY }}
+          PAT: ${{ PAT }}
+          D_KEY: ${{ D_KEY }}
           EMAIL: ${{ EMAIL }}
           PRJ_NAME: {{ PRJ_NAME }}
       - name: Download DesigniteJava
