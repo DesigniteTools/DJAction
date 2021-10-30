@@ -13,10 +13,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        env:
+          QSCORED_API_KEY: ${{ secrets.QSCORED_API_KEY }}
+          PAT: ${{ secrets.PAT }}
+          D_KEY: ${{ secrets.D_KEY }}
+          EMAIL: ${{ EMAIL }}
+          PRJ_NAME: {{ PRJ_NAME }}
       - name: Download DesigniteJava
         run: wget "https://www.designite-tools.com/static/download/DJE/DesigniteJava.jar"
       - name: Analyze project with DesigniteJava
         run: |
-          java -jar DesigniteJava.jar -ci -repo $GITHUB_REPOSITORY -pat ${{ secrets.PAT }} -k ${{ secrets.D_KEY }}
+          java -jar DesigniteJava.jar -ci -repo $GITHUB_REPOSITORY -pat ${{ env.PAT }} -k ${{ env.D_KEY }}
           ls
-          curl -X PUT -H "Authorization: Token ${{ secrets.QSCORED_API_KEY }}" -H "repository-link:https://github.com/" + GITHUB_REPOSITORY -H "username: 'Your email'" -H "Content-Type: mulitpart/form-data" --url "https://qscored.com/api/upload/file.xml?is_open_access=off&version=$GITHUB_RUN_NUMBER&project_name='Project name'" -F "file=@Designite_output/DesigniteAnalysis.xml"
+          curl -X PUT -H "Authorization: Token ${{ env.QSCORED_API_KEY }}" -H "repository-link:https://github.com/" + GITHUB_REPOSITORY -H "username: {{ env.EMAIL }}" -H "Content-Type: mulitpart/form-data" --url "https://qscored.com/api/upload/file.xml?is_open_access=off&version=$GITHUB_RUN_NUMBER&project_name={{ env.PRJ_NAME }}" -F "file=@Designite_output/DesigniteAnalysis.xml"
