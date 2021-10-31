@@ -56,8 +56,8 @@ Change the parameter values (EMAIL, PRJ_NAME, and OPEN_SOURCE). EMAIL should be 
 ## What you will get?
 Once configured, your Java project will be analyzed on each commit (can be configured differently), and the analysis report will be placed in your QScored account. You can visualize the trend of code quality within QScored.
 
-![QScored projects dashboard](my_projects_qscored.png)
+![QScored projects dashboard](./my_projects_qscored.png)
 
 Also, you may take a deeper look at your project's code quality at a specific commit using QScored's engaging visualizations. The visualizations are designed to help you understand the quality hotspots of your projects and help you dig deeper into them.
 
-![Code quality visualization in QScored](designitejava_summary_qscored.png)
+![Code quality visualization in QScored](./designitejava_summary_qscored.png)
