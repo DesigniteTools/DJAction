@@ -1,4 +1,4 @@
-name: DesigniteJava_action
+name: DesigniteJava
 description: Analyzes the newly commited code, detects comprehensive set of code smells, and uploads the results to QScored.
 branding:
     color: 'orange'
