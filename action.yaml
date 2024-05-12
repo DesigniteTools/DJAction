@@ -1,5 +1,5 @@
-name: DesigniteJava
-description: Analyzes the newly commited code, detects comprehensive set of code smells, and uploads the results to QScored.
+name: DesigniteJava Action
+description: Analyzes the newly commited code, detects comprehensive set of code smells, and archives the results.
 branding:
     color: 'orange'
     icon: 'arrow-up-right' 
@@ -7,18 +7,6 @@ inputs:
   PAT:
     description: 'Personal access token'
     default: 'No PAT provided'
-  QSCORED_API_KEY:
-    description: 'provide the QScored api'
-    default: 'No qscore provided'
-  EMAIL:
-    description: 'User name (email) for QScored'
-    default: 'No username provided'
-  PRJ_NAME:
-    description: 'QScored project name'
-    default: ${{ github.event.repository.name }}
-  OPEN_SOURCE:
-    description: 'is code quality results open-source? True/False'
-    default: False
   D_KEY:
     description: 'Designite license key - optional'
     default: 'No key'
@@ -27,15 +15,19 @@ runs:
   using: "composite"
   steps:
       - name: Download DesigniteJava
-        run: wget "https://www.designite-tools.com/static/download/DJE/DesigniteJava.jar"
+        run: wget "https://www.designite-tools.com/assets/DesigniteJava.jar"
         shell: sh
-      - name: Analyze project with DesigniteJava and upload the results to QScored
+      - name: Analyze project with DesigniteJava and archive the results
         run: |
             if [[ "${{inputs.D_KEY}}" == "No key" ]]; then
-            java -jar DesigniteJava.jar -ci -repo $GITHUB_REPOSITORY -pat ${{ inputs.PAT }}
+            java -jar DesigniteJava.jar -ci -repo $GITHUB_REPOSITORY -pat ${{ inputs.PAT }} -o "designite-output"
             fi
             if [[ "${{inputs.D_KEY}}" != "No key" ]]; then
-            java -jar DesigniteJava.jar -ci -repo $GITHUB_REPOSITORY -pat ${{ inputs.PAT }} -k inputs.D_KEY
+            java -jar DesigniteJava.jar -ci -repo $GITHUB_REPOSITORY -pat ${{ inputs.PAT }} -k inputs.D_KEY -o "designite-output"
             fi
-            curl -X PUT -H "Authorization: Token ${{ inputs.QSCORED_API_KEY }}" -H "repository-link:https://github.com/" + ${{ github.repository }} -H "username:${{ inputs.EMAIL }}" -H "Content-Type: mulitpart/form-data" --url "https://qscored.com/api/upload/file.xml?is_open_access=${{ inputs.OPEN_SOURCE }}&version=$GITHUB_RUN_NUMBER&project_name=${{ inputs.PRJ_NAME }}" -F "file=@Designite_output/DesigniteAnalysis.xml"
         shell: bash
+      - name: Archive Designite results
+        uses: actions/upload-artifact@v3
+        with:
+          name: designite-output-${{ github.sha }}
+          path: "designite-output"
