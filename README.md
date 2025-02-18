@@ -1,7 +1,7 @@
 # DesigniteJava action for GitHub
 
 ## What it does?
-This action analyzes your Java code using [DesigniteJava](https://www.designite-tools.com/designitejava/), detects a comprehensive set of architecture, design, and implementation smells, computes a large set of object-oriented code quality metrics, and uploads the results as an artifact.
+This action analyzes your Java code using [DesigniteJava](https://www.designite-tools.com/products-dj), detects a comprehensive set of architecture, design, and implementation smells, computes a large set of object-oriented code quality metrics, and uploads the results as an artifact.
 
 ## How to configure it?
 It is a one-time process.
@@ -12,9 +12,9 @@ It is a one-time process.
 
 ### Step 2: Optional: Add your Designite key to secrets
 
-If you have Designite’s professional (or academic) license key, add the key to your GitHub’s repository secrets. Let us call it D_KEY
+If you have Designite’s professional (or academic) license key, add the key to your GitHub’s repository secrets. Let us call it `D_KEY`
 
-### Step 4: Add a GitHub Actions workflow file
+### Step 3: Add a GitHub Actions workflow file
 
 This is the last and very crucial step. Create a folder `.github` on your root directory of the project and create `workflows` folder inside the `.github` folder. Create a workflow file (say `actions.yml`) in the newly created `workflows` folder. The contents of the `action.yml` file depend upon your project language and tasks.
 
@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: DesigniteJava_action
-      uses: DesigniteTools/DJAction@v1.0.0
+      uses: DesigniteTools/DJAction@v2.0.0
       with:
           PAT: ${{ secrets.PAT }}
 ```
