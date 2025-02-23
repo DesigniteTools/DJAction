@@ -27,7 +27,7 @@ runs:
             fi
         shell: bash
       - name: Archive Designite results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: designite-output-${{ github.sha }}
           path: "designite-output"
