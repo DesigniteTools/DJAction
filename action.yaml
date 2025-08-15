@@ -10,6 +10,12 @@ inputs:
   D_KEY:
     description: 'Designite license key - optional'
     default: 'No key'
+  API_KEY:
+    description: "DCode API key for authentication"
+    required: false
+  PROJECT_ID:
+    description: "DCode project ID"
+    required: false
 
 runs:
   using: "composite"
@@ -31,3 +37,33 @@ runs:
         with:
           name: designite-output-${{ github.sha }}
           path: "designite-output"
+      - name: Store analysis results on DCode platform, if configured
+        shell: bash
+        run: |
+          if [ -n "${{ inputs.API_KEY }}" ]; then
+            echo "DCode API key is configured. Uploading the analysis results on DCode..."
+            # Build -F arguments with numbered keys file1, file2, ...
+            form_args=()
+            counter=1
+            for file in designite-output/*; do
+              if [ -f "$file" ]; then
+                form_args+=(-F "file${counter}=@${file}")
+                counter=$((counter + 1))
+              fi
+            done
+            if [ ${#form_args[@]} -eq 0 ]; then
+              echo "No files found in folder designite-output."
+              exit 1
+            fi
+            # Build curl command (array to handle spaces safely)
+            curl_cmd=("curl" "-s" "-o" "/tmp/curl_output" "-w" "%{http_code}" "-X" "POST" "-H" "X-API-Key: ${{ inputs.API_KEY }}" "-H" "X-Commit-ID: ${{ github.sha }}" "${form_args[@]}" "https://dcodehub.com/api/projects/${{ inputs.PROJECT_ID }}/upload/")
+            safe_cmd=("${curl_cmd[@]}")
+            echo "Executing: ${safe_cmd[*]}"
+            http_status=$("${curl_cmd[@]}")
+            echo "HTTP status code: $http_status"
+  
+            echo "API response:"
+            cat /tmp/curl_output
+          else
+            echo "DCode API key not set. Skipping uploading analysis results to DCode."
+          fi
