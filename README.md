@@ -48,6 +48,6 @@ jobs:
 Change the version number of action.
 
 ## What you'll get
-Once configured, your Python repository will be analyzed on each event defined in your workflow file (in the example above, the analysis runs on every push or pull request to the main branch). The resulting report will be stored as a GitHub Actions artifact, which you can download later to review detected code quality smells and metrics for deeper analysis.
+Once configured, your Java repository will be analyzed on each event defined in your workflow file (in the example above, the analysis runs on every push or pull request to the main branch). The resulting report will be stored as a GitHub Actions artifact, which you can download later to review detected code quality smells and metrics for deeper analysis.
 
 If integrated with DCode, you can automatically track code quality over time. DCode provides interactive visualizations to help you understand and monitor code health, enabling data-driven engineering decisions.
