@@ -31,10 +31,10 @@ runs:
     - name: Analyze project with DesigniteJava and archive the results
       run: |
           if [[ "${{inputs.D_KEY}}" == "No key" ]]; then
-          java -jar DesigniteJava.jar -ci -repo $GITHUB_REPOSITORY -pat ${{ inputs.PAT }} -o "designite-output"
+          java -jar DesigniteJava.jar -ci -repo $GITHUB_REPOSITORY -pat ${{ inputs.PAT }} -o "designite-output" -g
           fi
           if [[ "${{inputs.D_KEY}}" != "No key" ]]; then
-          java -jar DesigniteJava.jar -ci -repo $GITHUB_REPOSITORY -pat ${{ inputs.PAT }} -k inputs.D_KEY -o "designite-output"
+          java -jar DesigniteJava.jar -ci -repo $GITHUB_REPOSITORY -pat ${{ inputs.PAT }} -k inputs.D_KEY -o "designite-output" -g
           fi
       shell: bash
     - name: Archive Designite results
