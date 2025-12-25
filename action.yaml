@@ -82,6 +82,7 @@ runs:
 
           # Extract fields
           result=$(jq -r '.quality_gate.result // "PASSED"' /tmp/curl_output)
+          echo $result
         
           if [[ "$result" != "PASSED" ]]; then
             echo "::error::Quality gate failed. Profile=$profile"
