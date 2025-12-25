@@ -72,9 +72,10 @@ runs:
         
           # Check if quality gate is active
           is_active=$(jq -r '.quality_gate.is_active // false' /tmp/curl_output)
-
+          profile=$(jq -r '.quality_gate.profile_name // Unknown' /tmp/curl_output)
+        
           if [[ "$is_active" != "true" ]]; then
-            echo "::notice::Quality Gate is not active"
+            echo "::notice::Quality Gate is not active" "::error title=Quality Gate Failed::Profile='$profile'
             exit 0
           fi
 
@@ -82,10 +83,10 @@ runs:
           result=$(echo "$response" | jq -r '.quality_gate.result')
 
           if [[ "$result" != "PASSED" ]]; then
-            echo "::error title=Quality Gate Failed."
+            echo "::error title=Quality Gate Failed::Profile='$profile'"
             exit 1
           fi
-          echo "::notice title=Quality Gate Passed."
+          echo "::notice title=Quality Gate Passed::Profile='$profile'"
         else
           echo "DCode API key not set. Skipping uploading analysis results to DCode."
         fi
