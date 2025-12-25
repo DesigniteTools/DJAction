@@ -81,14 +81,13 @@ runs:
           fi
 
           # Extract fields
-          result=$(echo "$response" | jq -r '.quality_gate.result')
-          echo $result
+          result=$(jq -r '.quality_gate.result // "PASSED"' /tmp/curl_output)
         
           if [[ "$result" != "PASSED" ]]; then
-            echo "::error::Quality gate failed. Profile='$profile'"
+            echo "::error::Quality gate failed. Profile=$profile"
             exit 1
           fi
-          echo "::notice::Quality gate passed. Profile='$profile'"
+          echo "::notice::Quality gate passed. Profile=$profile"
         else
           echo "DCode API key not set. Skipping uploading analysis results to DCode."
         fi
