@@ -80,8 +80,8 @@ runs:
           fi
 
           # Extract fields
-          profile=$(jq -r '.quality_gate.profile_name // "Unknown"' /tmp/curl_output)
           result=$(jq -r '.quality_gate.result // "PASSED"' /tmp/curl_output)
+          profile=$(jq -r '.quality_gate.profile_name // "Unknown"' /tmp/curl_output)
           echo "$result"
         
           if [[ "$result" != "PASSED" ]]; then
