@@ -42,7 +42,7 @@ runs:
       with:
         name: designite-output-${{ github.sha }}
         path: "designite-output"
-    - name: Store analysis results on DCode platform, if configured
+    - name: Store analysis results on DCode platform, if configured. Also, check whether the code passes the configured quality gate
       shell: bash
       run: |
         if [ -n "${{ inputs.API_KEY }}" ]; then
@@ -69,6 +69,23 @@ runs:
 
           echo "API response:"
           cat /tmp/curl_output
+        
+          # Check if quality gate is active
+          is_active=$(jq -r '.quality_gate.is_active // false' /tmp/curl_output)
+
+          if [[ "$is_active" != "true" ]]; then
+            echo "::notice::Quality Gate is not active"
+            exit 0
+          fi
+
+          # Extract fields
+          result=$(echo "$response" | jq -r '.quality_gate.result')
+
+          if [[ "$result" != "PASSED" ]]; then
+            echo "::error title=Quality Gate Failed."
+            exit 1
+          fi
+          echo "::notice title=Quality Gate Passed."
         else
           echo "DCode API key not set. Skipping uploading analysis results to DCode."
         fi
