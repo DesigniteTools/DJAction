@@ -73,7 +73,6 @@ runs:
         
           # Check if quality gate is active
           is_active=$(jq -r '.quality_gate.is_active // false' /tmp/curl_output)
-          profile=$(jq -r '.quality_gate.profile_name // "Unknown"' /tmp/curl_output)
         
           if [[ "$is_active" != "true" ]]; then
             echo "::notice::Quality Gate is not active" 
@@ -81,8 +80,9 @@ runs:
           fi
 
           # Extract fields
+          profile=$(jq -r '.quality_gate.profile_name // "Unknown"' /tmp/curl_output)
           result=$(jq -r '.quality_gate.result // "PASSED"' /tmp/curl_output)
-          echo $result
+          echo "$result"
         
           if [[ "$result" != "PASSED" ]]; then
             echo "::error::Quality gate failed. Profile=$profile"
