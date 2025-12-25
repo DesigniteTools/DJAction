@@ -69,6 +69,7 @@ runs:
 
           echo "API response:"
           cat /tmp/curl_output
+          echo
         
           # Check if quality gate is active
           is_active=$(jq -r '.quality_gate.is_active // false' /tmp/curl_output)
