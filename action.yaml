@@ -84,10 +84,10 @@ runs:
           result=$(echo "$response" | jq -r '.quality_gate.result')
 
           if [[ "$result" != "PASSED" ]]; then
-            echo "::error title=Quality Gate Failed::Profile='$profile'"
+            echo "::error::Quality gate failed. Profile='$profile'"
             exit 1
           fi
-          echo "::notice title=Quality Gate Passed::Profile='$profile'"
+          echo "::notice::Quality gate passed. Profile='$profile'"
         else
           echo "DCode API key not set. Skipping uploading analysis results to DCode."
         fi
