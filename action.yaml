@@ -75,7 +75,7 @@ runs:
           profile=$(jq -r '.quality_gate.profile_name // Unknown' /tmp/curl_output)
         
           if [[ "$is_active" != "true" ]]; then
-            echo "::notice::Quality Gate is not active" "::error title=Quality Gate Failed::Profile='$profile'
+            echo "::notice::Quality Gate is not active" 
             exit 0
           fi
 
